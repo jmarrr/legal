@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blur Faces — hide faces &amp; license plates before you share</title>
+<meta name="description" content="Blur faces, license plates, and anything private in a photo before you post it. Automatic face detection plus tap-to-blur, on-device. No ads, no subscription. Pay once.">
+<meta name="theme-color" content="#8a2b62">
+<meta property="og:title" content="Blur Faces — photo privacy before you share">
+<meta property="og:description" content="Auto-blur faces and license plates, or tap to blur anything. 100% on-device. No ads, no subscription. Pay once.">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icon.png">
+<style>
+  :root{
+    --accent:#a8336e; --accent-dark:#82254f; --accent-soft:#f9e9f1;
+    --ink:#1b0e16; --muted:#6b5560; --line:#ece2e7; --bg:#ffffff; --bg-alt:#faf5f8;
+    --radius:18px; --shadow:0 18px 50px rgba(90,16,57,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+       color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(14px);
+      background:rgba(255,255,255,.82);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:1.02rem}
+  .brand img{width:34px;height:34px;border-radius:9px}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;
+           padding:9px 16px;border-radius:980px;font-size:.9rem;font-weight:600}
+  .nav-cta svg{width:15px;height:15px;fill:#fff}
+  .hero{position:relative;overflow:hidden;background:
+        radial-gradient(1100px 540px at 80% -10%,#f6dcea 0,rgba(255,255,255,0) 60%),
+        linear-gradient(180deg,#fcf2f7 0,#ffffff 70%)}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+              padding:74px 22px 64px}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);
+           color:var(--accent-dark);font-weight:600;font-size:.82rem;padding:6px 13px;border-radius:980px;
+           border:1px solid #f0d3e2;margin-bottom:18px}
+  h1{font-size:3.05rem;line-height:1.06;letter-spacing:-.02em;margin:.1em 0 .35em;font-weight:800}
+  h1 .grad{background:linear-gradient(120deg,var(--accent),#d4699e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:1.18rem;color:var(--muted);max-width:30em;margin:0 0 28px}
+  .cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .appstore{display:inline-flex;align-items:center;gap:11px;background:#000;color:#fff;
+            padding:13px 22px;border-radius:14px;font-weight:600;transition:transform .15s ease}
+  .appstore:hover{transform:translateY(-2px)}
+  .appstore svg{width:26px;height:26px;fill:#fff}
+  .appstore small{display:block;font-size:.66rem;opacity:.85;font-weight:500;line-height:1}
+  .appstore b{font-size:1.16rem;font-weight:600;line-height:1.15}
+  .price-pill{font-size:.92rem;color:var(--muted)}
+  .price-pill b{color:var(--ink)}
+  .phone-stage{display:flex;justify-content:center}
+  .phone{width:286px;max-width:78vw;border-radius:46px;background:#0b0b0d;padding:11px;
+         box-shadow:var(--shadow);position:relative}
+  .phone img{width:100%;border-radius:36px;display:block}
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-alt)}
+  .trust .wrap{display:flex;flex-wrap:wrap;gap:14px 36px;justify-content:center;padding:20px 22px}
+  .trust span{display:inline-flex;align-items:center;gap:9px;font-weight:600;color:#34232c}
+  .trust svg{width:19px;height:19px;fill:none;stroke:var(--accent);stroke-width:2.4}
+  section{padding:78px 0}
+  .sec-head{text-align:center;max-width:34em;margin:0 auto 50px}
+  .sec-head h2{font-size:2.1rem;letter-spacing:-.02em;margin:0 0 .35em;font-weight:800}
+  .sec-head p{color:var(--muted);font-size:1.1rem;margin:0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px;
+        transition:transform .18s ease,box-shadow .18s ease}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .ic{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);display:flex;
+      align-items:center;justify-content:center;margin-bottom:16px}
+  .ic svg{width:24px;height:24px;fill:none;stroke:var(--accent);stroke-width:2}
+  .card h3{margin:0 0 .35em;font-size:1.16rem}
+  .card p{margin:0;color:var(--muted);font-size:.97rem}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;counter-reset:step}
+  .step{position:relative;padding-top:8px}
+  .step::before{counter-increment:step;content:counter(step);display:flex;align-items:center;justify-content:center;
+                width:42px;height:42px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;
+                font-size:1.15rem;margin-bottom:16px}
+  .step h3{margin:0 0 .3em;font-size:1.14rem}
+  .step p{margin:0;color:var(--muted)}
+  .showcase{background:linear-gradient(180deg,#fcf2f7,#ffffff)}
+  .shots{display:flex;gap:28px;justify-content:center;flex-wrap:wrap}
+  .shots .phone{width:248px}
+  .pricing{display:flex;justify-content:center}
+  .pricecard{background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:42px 40px;
+             max-width:430px;text-align:center;box-shadow:var(--shadow)}
+  .pricecard .amt{font-size:3.2rem;font-weight:800;letter-spacing:-.02em;margin:.1em 0 0}
+  .pricecard .amt span{font-size:1.1rem;color:var(--muted);font-weight:600}
+  .pricecard .once{display:inline-block;background:var(--accent-soft);color:var(--accent-dark);font-weight:700;
+                   padding:5px 14px;border-radius:980px;font-size:.85rem;margin-bottom:6px}
+  .plist{list-style:none;padding:0;margin:22px 0 28px;text-align:left}
+  .plist li{display:flex;gap:11px;align-items:flex-start;padding:7px 0;color:#2f2128}
+  .plist svg{width:20px;height:20px;flex:none;margin-top:3px;fill:none;stroke:var(--accent);stroke-width:2.6}
+  .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:#fff;
+               padding:14px 26px;border-radius:14px;font-weight:600;font-size:1.02rem}
+  .btn-primary svg{width:20px;height:20px;fill:#fff}
+  .faq{max-width:760px;margin:0 auto}
+  details{border:1px solid var(--line);border-radius:14px;padding:4px 20px;margin-bottom:12px;background:var(--bg)}
+  details[open]{box-shadow:var(--shadow)}
+  summary{cursor:pointer;font-weight:600;padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";font-size:1.5rem;color:var(--accent);font-weight:400;line-height:1}
+  details[open] summary::after{content:"\2013"}
+  details p{margin:0 0 18px;color:var(--muted)}
+  .band{background:linear-gradient(120deg,var(--accent-dark),var(--accent));color:#fff;text-align:center}
+  .band h2{font-size:2.2rem;margin:0 0 .3em;letter-spacing:-.02em}
+  .band p{margin:0 0 26px;opacity:.95;font-size:1.12rem}
+  .band .appstore{background:#fff;color:#000}
+  .band .appstore svg{fill:#000}
+  footer{background:#1b0e16;color:#c8b3bf;padding:48px 0 40px;font-size:.92rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;align-items:center}
+  footer a{color:#ecdde5}
+  footer .links{display:flex;gap:22px;flex-wrap:wrap}
+  @media(max-width:840px){
+    .hero .wrap{grid-template-columns:1fr;text-align:center;padding-top:54px}
+    .lede{margin-left:auto;margin-right:auto}.cta-row{justify-content:center}.eyebrow{margin-inline:auto}
+    .phone-stage{order:-1}h1{font-size:2.5rem}
+    .grid,.steps{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#top"><img src="img/icon.png" alt="Blur Faces icon">Blur Faces</a>
+  <a class="nav-cta" href="https://apps.apple.com/app/id6783737560"><svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg><span>App Store</span></a>
+</div></nav>
+
+<header id="top" class="hero"><div class="wrap">
+  <div>
+    <span class="eyebrow">No ads · No subscription · On-device</span>
+    <h1>Hide faces before<br><span class="grad">you hit share.</span></h1>
+    <p class="lede">Protect the people in your photos. Auto-detect and blur every face in a group shot, or tap to blur license plates, house numbers, screens — anything you don't want public.</p>
+    <div class="cta-row">
+      <a class="appstore" href="https://apps.apple.com/app/id6783737560">
+        <svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg>
+        <span><small>Download on the</small><b>App Store</b></span>
+      </a>
+      <span class="price-pill"><b>$4.99</b> once — yours forever</span>
+    </div>
+  </div>
+  <div class="phone-stage"><div class="phone"><img src="img/editor.jpg" alt="Blur Faces editor auto-blurring faces in a group photo"></div></div>
+</div></header>
+
+<div class="trust"><div class="wrap">
+  <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Auto face detection</span>
+  <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Photos never uploaded</span>
+  <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>No ads, no subscription</span>
+  <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Full resolution export</span>
+</div></div>
+
+<section><div class="wrap">
+  <div class="sec-head"><h2>Privacy in a couple of taps</h2>
+    <p>Built for one job: keep the wrong things out of the photos you post.</p></div>
+  <div class="grid">
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.2"/><circle cx="15" cy="10" r="1.2"/><path d="M9 15c1.5 1.3 4.5 1.3 6 0"/></svg></div>
+      <h3>Auto-blur faces</h3><p>On-device detection finds every face in a group photo and blurs them in one tap.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11l-5 5v3h3l5-5"/><path d="M13 7l4 4 3-3a2.8 2.8 0 0 0-4-4z"/></svg></div>
+      <h3>Tap to blur anything</h3><p>License plates, house numbers, screens, documents, tattoos — tap and it's gone.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <h3>Precise &amp; adjustable</h3><p>Drag, resize, and fine-tune each blur region so you cover exactly what you mean to.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h10M4 12h7M4 18h12"/><rect x="16" y="4" width="5" height="5" rx="1"/></svg></div>
+      <h3>Blur or pixelate</h3><p>Choose a soft gaussian blur or a chunky pixelate, and set the strength to taste.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div>
+      <h3>100% on-device</h3><p>No servers, no accounts, no analytics. Your photos never leave your iPhone.</p></div>
+    <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"/></svg></div>
+      <h3>Full-quality export</h3><p>Save the protected photo at full resolution to Photos, Files, or share it directly.</p></div>
+  </div>
+</div></section>
+
+<section style="background:var(--bg-alt)"><div class="wrap">
+  <div class="sec-head"><h2>Three taps to a safe-to-share photo</h2><p>No tutorial, no account, no setup.</p></div>
+  <div class="steps">
+    <div class="step"><h3>Pick a photo</h3><p>Choose any photo through Apple's secure picker.</p></div>
+    <div class="step"><h3>Auto-blur or tap</h3><p>Hit Auto-Blur Faces, or tap anything else you want hidden.</p></div>
+    <div class="step"><h3>Save &amp; share</h3><p>Export at full quality and post with peace of mind.</p></div>
+  </div>
+</div></section>
+
+<section class="showcase"><div class="wrap">
+  <div class="sec-head"><h2>See it in action</h2><p>Selective control over exactly what gets hidden.</p></div>
+  <div class="shots">
+    <div class="phone"><img src="img/selective.jpg" alt="Selectively blurring one face while leaving others"></div>
+    <div class="phone"><img src="img/export.jpg" alt="Protected photo ready to share"></div>
+  </div>
+</div></section>
+
+<section><div class="wrap pricing">
+  <div class="pricecard">
+    <span class="once">One-time purchase</span>
+    <div class="amt">$4.99<span> once</span></div>
+    <p style="color:var(--muted);margin:.3em 0 0">Pay once, protect every photo you ever share. No subscription, no ads.</p>
+    <ul class="plist">
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Unlimited saves &amp; exports</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Auto-blur + all blur tools</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>No ads and no subscription, ever</li>
+      <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Every future update included</li>
+    </ul>
+    <a class="btn-primary" href="https://apps.apple.com/app/id6783737560">
+      <svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/></svg>
+      Get it on the App Store</a>
+  </div>
+</div></section>
+
+<section style="background:var(--bg-alt)"><div class="wrap">
+  <div class="sec-head"><h2>Questions, answered</h2></div>
+  <div class="faq">
+    <details open><summary>How do I blur faces in a photo?</summary><p>Open a photo and tap Auto-Blur Faces — the app detects every face on your device and blurs them instantly. You can also tap any face or object yourself to blur it by hand.</p></details>
+    <details><summary>Can I blur just one person and leave the others?</summary><p>Yes. Each blur is its own region — add, remove, move, or resize them individually, so you can protect one person in a group and leave the rest untouched.</p></details>
+    <details><summary>Can I blur license plates or other things, not just faces?</summary><p>Absolutely. Tap to blur license plates, house numbers, screens, documents, ID cards, tattoos — anything you don't want visible.</p></details>
+    <details><summary>Are my photos uploaded anywhere?</summary><p>Never. Face detection and blurring happen entirely on your iPhone. There are no servers, no accounts, and no analytics — your photos never leave the device.</p></details>
+    <details><summary>Blur or pixelate — what's the difference?</summary><p>Blur is a soft gaussian smear; pixelate breaks the area into chunky blocks. Both fully obscure the content — pick whichever look you prefer and set the strength.</p></details>
+    <details><summary>Is it a subscription?</summary><p>No. One payment of $4.99 unlocks everything forever, including future updates. No weekly fees, no ads.</p></details>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Share photos, not private details</h2>
+  <p>Auto-blur faces and license plates — on-device, no ads, no subscription.</p>
+  <a class="appstore" href="https://apps.apple.com/app/id6783737560">
+    <svg viewBox="0 0 384 512"><path d="M318 268c-1-58 47-86 49-87-27-39-68-44-83-45-35-4-69 21-87 21s-45-20-74-20c-38 1-73 22-93 56-40 69-10 171 28 227 19 27 41 58 71 57 29-1 40-19 74-19s44 19 74 18c31 0 50-28 68-55 22-31 31-61 31-63-1-1-60-23-61-90z"/><path d="M262 84c16-19 27-46 24-73-23 1-51 16-67 35-15 17-28 44-25 70 26 2 52-13 68-32z"/></svg>
+    <span><small>Download on the</small><b>App Store</b></span></a>
+</div></section>
+
+<footer><div class="wrap">
+  <div>© 2026 Blur Faces</div>
+  <div class="links">
+    <a href="../privacy.html">Privacy</a>
+    <a href="../terms.html">Terms</a>
+    <a href="mailto:overlapmarr@gmail.com">Contact</a>
+    <a href="../heic-to-jpg/">HEIC to JPG</a>
+  </div>
+</div></footer>
+
+</body>
+</html>
