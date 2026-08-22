@@ -14,23 +14,27 @@
 </head>
 <body>
 <h1>Skintel — Privacy Policy</h1>
-<p class="muted">Last updated: 19 August 2026</p>
+<p class="muted">Last updated: 22 August 2026</p>
 
 <p>This policy applies to <strong>Skintel</strong>, a skin tracking app for iOS.</p>
 
 <div class="lede">
-<p style="margin:0"><strong>Short version: your photo is used to produce your score and is not
-kept afterwards.</strong> Your scores, routine and history stay on your device. We do not sell
-your data, we do not use it to train AI models, and there are no advertising SDKs in the app.
-Unlike a purely offline app, Skintel does have to process your photo to analyse it — this policy
-explains exactly how.</p>
+<p style="margin:0"><strong>Short version: every scan sends your photo to an AI processing
+provider, which is the only way Skintel can score it.</strong> We keep no copy on any server of
+ours, and your scores, routine and history stay on your device. We do not sell your data, we do
+not use it to train AI models, there are no accounts, and there are no advertising SDKs in the
+app. Skintel is not an offline app, and this policy explains exactly where your photo goes.</p>
 </div>
 
 <h2>What Skintel stores on your device</h2>
 <p>The following is written to your device's local app storage and is not uploaded to us:</p>
 <ul>
   <li><strong>Your scores and readings</strong> — the overall score and the individual metrics
-      (hydration, even tone, pores, fine lines) for each scan, with the date.</li>
+      (hydration, even tone, texture, pores, redness, dark spots, fine lines, firmness, and the
+      visual structure estimates) for each scan, with the date.</li>
+  <li><strong>Your scan photos</strong> — kept in the app's own storage so history and the
+      before/after pair work. They are not uploaded to us, and deleting the app or using
+      <em>Delete everything</em> in Settings removes them.</li>
   <li><strong>Your routine</strong> — which steps you have, and which you ticked off on which day.</li>
   <li><strong>Your skin profile</strong> — concerns, skin type, and any ingredient sensitivities
       you tell us about.</li>
@@ -41,19 +45,32 @@ explains exactly how.</p>
 <h2>Your photo, and what happens to it</h2>
 <p>This is the part that matters most, so it is spelled out in full.</p>
 <ul>
-  <li>When you take a scan, the photo is used <strong>solely to generate your skin
-      analysis</strong>.</li>
-  <li>Where analysis runs on your device, the photo never leaves it.</li>
-  <li>Where analysis requires our AI processing provider, the image is transmitted over an
-      encrypted connection, analysed, and the result returned. Under our agreement with that
-      provider the image is <strong>not retained after processing</strong> and is
-      <strong>not used to train any model</strong>.</li>
+  <li><strong>Every scan is analysed off your device.</strong> There is no on-device analysis
+      mode. When you take a scan, the photo is resized on your phone and then transmitted over an
+      encrypted connection to our processing function, which passes it to our AI processing
+      provider (OpenAI). The result comes back and the request ends.</li>
+  <li>The photo is used <strong>solely to generate your analysis</strong> — nothing else.</li>
+  <li><strong>We keep no copy.</strong> Our function writes the image to no database and no
+      storage bucket; it holds it only for the seconds the request takes.</li>
+  <li><strong>Our AI provider may retain the image for up to 30 days</strong>, solely to monitor
+      for abuse of their API, after which they delete it. That is their standard API policy, and
+      it is why Skintel's App Store privacy label declares photos as <em>collected</em> rather
+      than claiming nothing leaves the device.</li>
+  <li>Your photo is <strong>not used to train any AI model</strong>, by us or by our provider.</li>
   <li>We do not attach your name, email or any account identifier to the image, because Skintel
-      has no accounts.</li>
-  <li>We do not keep a copy of your photo on any server of ours.</li>
+      has no accounts. Nothing sent with the photo identifies you.</li>
+  <li><strong>Ingredient labels too.</strong> If you photograph a product's ingredient panel, that
+      photo travels the same path and is handled the same way — it is read for the printed text
+      and nothing more.</li>
 </ul>
 <p>If you would rather not have a photo analysed at all, do not run a scan — the routine
 checklist and the rest of the app work without one.</p>
+
+<h2>What our App Store privacy label says</h2>
+<p>For clarity, this is exactly what we have declared to Apple, and it matches the section above:
+<strong>Photos or Videos — collected, used for App Functionality, not linked to your identity,
+and not used for tracking.</strong> We declare no other data type, because the app collects no
+other data.</p>
 
 <h2>Face data</h2>
 <p>An image of your face is personal information, and in some places it is treated as sensitive.
@@ -68,14 +85,15 @@ score. Nothing about it is used to recognise a person.</p>
   <li>No selling or sharing of your information with data brokers or advertisers.</li>
   <li>No advertising SDKs and no cross-app tracking.</li>
   <li>No use of your photos or readings to train AI models.</li>
-  <li>No health data written to Apple Health unless you explicitly ask for it.</li>
+  <li>No connection to Apple Health. Skintel neither reads from nor writes to it.</li>
 </ul>
 
 <h2>Subscriptions</h2>
-<p>Skintel Premium is sold through Apple. Payment is handled entirely by Apple — we never see your
-card details. To manage entitlements we use RevenueCat, which receives a random, app-generated
-identifier and your purchase status. It does not receive your photos, scores or any health
-information.</p>
+<p>Skintel Premium is sold through Apple, using Apple's own in-app purchase system directly.
+Payment is handled entirely by Apple — we never see your card details. There is <strong>no
+third-party purchase or subscription SDK</strong> in the app, so no outside company receives a
+customer identifier, your purchase history, or anything else from your device. We see only the
+aggregate sales figures Apple reports to every developer.</p>
 
 <h2>Analytics and crash reporting</h2>
 <p>If crash or usage reporting is enabled in a future version, it will record only technical events
@@ -94,8 +112,10 @@ server and cannot send you anything.</p>
       of the app continues to work.</li>
   <li><strong>Uninstalling</strong> removes all locally stored data.</li>
 </ul>
-<p>Because we hold no account and no server-side copy of your data, there is nothing for us to
-delete on request — but if you have a question about it, write to us and we will answer.</p>
+<p>Because we hold no account and no server-side copy of your data, there is nothing on our side to
+delete on request. The one exception is the short abuse-monitoring window at our AI provider
+described above, which expires on its own within 30 days. If you have a question about any of it,
+write to us and we will answer.</p>
 
 <h2>Children</h2>
 <p>Skintel is not directed at children under 13 and we do not knowingly collect information from
