@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>Privacy Policy</h1>
-<p class="muted">Last updated: 25 September 2026</p>
+<p class="muted">Last updated: 5 October 2026</p>
 
 <p>This policy applies to all of our iOS apps, including <strong>HEIC to JPG Converter</strong> and <strong>Blur Faces &amp; License Plates</strong>, and any future apps we publish under the same developer account.</p>
 
@@ -33,6 +33,8 @@
 <p>Some of our apps use Apple's built-in Vision framework on the device to find a face in a photo or video. This is never used to identify a person. We do <strong>not</strong> collect, store, transmit, share, or sell face data or any biometric information. Face positions are held in memory only while the app is working on that photo or video, and are discarded when processing finishes or you leave the screen. Nothing about a face is written to a file (other than a result you choose to save, described below), saved after you close the app, or sent off the device. No face recognition, identification, or matching is performed.</p>
 <p><strong>Blur Faces &amp; License Plates</strong> and <strong>BlurClip &ndash; Blur Video</strong> look at an image only to locate the rectangular position of any faces so they can place a blur over them.</p>
 <p><strong>PDExact: PD Measure</strong> uses Vision only to estimate pupil centres and the nose bridge in a photo the user took of themselves holding a card, so the app can pre-place markers the user then adjusts by hand. The measurement (distances in millimetres) is computed on the device from those marker positions and a known card size. If the user exports a PDF, that PDF contains millimetre numbers only &mdash; not a face image, not face geometry, and not a biometric template. The photo stays on the device unless the user explicitly saves or shares it. Face landmark positions are not retained after the user leaves the measurement screen.</p>
+<p id="verticly"><strong>Verticly: Vertical Video</strong> looks at sampled frames of the video you choose to find the rectangular position of people and faces in each frame, only to decide where to aim the vertical (or square) crop as the video plays. Each frame&rsquo;s face and person rectangles are reduced to a single crop position and discarded immediately. No face image, face geometry, landmark, or biometric template is created or kept. The only output is the reframed video, which stays on your device until you choose to save or share it.</p>
+<p id="passnap"><strong>PasSnap &ndash; Headshot Size</strong> looks at the photo you choose to find the rectangular position of the largest face, only to scale and centre the head to the photo size rules you selected, and separates the person from the background on the device to make a plain background. The face rectangle is not saved. The only output is the resized photo, which stays on your device until you choose to save or share it.</p>
 <p>Face data is never retained by us, never shared with any third party, and never used for advertising, analytics, or identification.</p>
 
 <h2>Third-party and AI services</h2>
