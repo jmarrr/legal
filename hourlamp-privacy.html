@@ -46,8 +46,10 @@ identifier, no install identifier, and no name or email. Counts from everyone wh
 game on the same date are added together. On a date when only one person installed, that date's
 counts describe one anonymous player, but nothing in them says who it is. Because of this, no
 one's counts can be looked up or deleted individually.</p>
-<p>Our code stores no IP address. Like any web request, the request that delivers the counts may
-briefly appear in our hosting provider's request logs, and we do not keep those logs.</p>
+<p>Like any web request, the request that delivers the counts also carries standard technical
+details, such as your IP address and a generic iOS network label. Our code stores none of them. The
+request may briefly appear in our hosting provider's request logs, and we do not keep those
+logs.</p>
 <p>The counts are stored as totals in a database run by our hosting providers, Vercel and Upstash,
 and expire after 400 days. They are used only to improve the game. We never sell or share them,
 never use them for advertising, and never combine them with data from other apps or companies.
